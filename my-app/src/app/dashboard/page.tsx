@@ -200,6 +200,17 @@ export default function DashboardPage() {
           ""
         )
       );
+      const userId = localStorage.getItem("userId");
+
+    let language = localStorage.getItem("language") || "en";
+    let recieverLang = "";
+    if (language == "Hindi") {
+      language = "hi";
+      recieverLang = "en";
+    }else{
+      language = "en";
+      recieverLang = "hi";
+    }
       console.log("----->" + audioData.senderLang, audioData.receiverLang);
 
       const msg = {
@@ -207,8 +218,8 @@ export default function DashboardPage() {
         receiver: selectedUser.senderId._id,
         messageType: "voice",
         audioBase64: base64Audio,
-        senderLang: audioData.senderLang,
-        receiverLang: audioData.receiverLang,
+        senderLang: language,
+        receiverLang: recieverLang,
       };
 
       socketRef.current.emit("send-message", msg);
@@ -228,31 +239,6 @@ export default function DashboardPage() {
       console.error("Error sending voice message:", error);
     }
   };
-
-  // const loadMentors = async () => {
-  //   try {
-  //     const mockMentors: MentorProfile[] = [
-  //       {
-  //         _id: "1",
-  //         name: "Sarah Johnson",
-  //         skills: ["React", "JavaScript", "Node.js"],
-  //         language: "en",
-  //       },
-  //       {
-  //         _id: "2",
-  //         name: "Carlos Rodriguez",
-  //         skills: ["Python", "Machine Learning", "Data Science"],
-  //         rating: 4.8,
-  //         language: "es",
-  //       },
-  //     ];
-
-  //     setMentors(mockMentors);
-  //     setFilteredMentors(mockMentors);
-  //   } catch (error) {
-  //     console.error("Error loading mentors:", error);
-  //   }
-  // };
 
   const loadRequests = async () => {
     try {
@@ -411,9 +397,18 @@ export default function DashboardPage() {
     fetchMessages();
   }, [selectedUser]);
 
-  const handleSendText = async () => {
+ const handleSendText = async () => {
     if (!newMessage.trim() || !selectedUser) return;
     const userId = localStorage.getItem("userId");
+    let language = localStorage.getItem("language") || "en";
+    let recieverLang = "";
+    if (language == "Hindi") {
+      language = "hi";
+      recieverLang = "en";
+    }else{
+      language = "en";
+      recieverLang = "hi";
+    }
     if (!userId || !socketRef.current) return;
 
     const msg = {
@@ -421,8 +416,8 @@ export default function DashboardPage() {
       receiver: selectedUser.senderId._id,
       messageType: "text",
       text: newMessage,
-      senderLang: "en",
-      receiverLang: "hi",
+      senderLang: language,
+      receiverLang: recieverLang,
     };
 
     socketRef.current.emit("send-message", msg);
