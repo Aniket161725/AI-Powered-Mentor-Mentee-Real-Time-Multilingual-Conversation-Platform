@@ -6,7 +6,7 @@ AI-Powered-Mentor-Mentee-Real-Time-Multilingual-Conversation-Platform/
 ├── my-app/                  # Frontend (Next.js + Tailwind + React)
 │   ├── public/
 │   ├── src/
-│   ├── package.json
+│   ├── package.json 
 │   └── ...
 │
 ├── backend/                 # Backend (Node.js + Express + MongoDB + Socket.io)
